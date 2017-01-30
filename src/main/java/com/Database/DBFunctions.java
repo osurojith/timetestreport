@@ -18,7 +18,7 @@ public class DBFunctions {
 		stmt =  conn.createStatement();
 	      String sql;
 	      sql = "SELECT * FROM `"+tableName+"` WHERE daystamp='"+date+"' and timestamp='"+time+"'";
-	      System.out.println(sql);
+	      //System.out.println(sql);
 	      ResultSet rs = stmt.executeQuery(sql);
 
 	      
@@ -28,7 +28,7 @@ public class DBFunctions {
 	         double pageTime  = rs.getDouble(pgName);
 	         loadtime=loadtime+pageTime;
 	         //Display values
-	         System.out.println("pageLoadTime: " + pageTime);
+	       //  System.out.println("pageLoadTime: " + pageTime);
 	       
 	      }
 	     
@@ -39,6 +39,31 @@ public class DBFunctions {
 	      double val=Math.round(loadtime*100);
 	      return val/100;
 	}
+		public int getCount(String tableName) throws SQLException, ClassNotFoundException{
+			int rowcount=0;
+		Statement stmt = null;
+			 Connection conn=DBConnection.conn();
+			double loadtime=0;
+			stmt =  conn.createStatement();
+		      String sql;
+		      sql = "SELECT COUNT(*) as rowcount FROM `"+tableName+"`;";
+		      //System.out.println(sql);
+		      ResultSet rs = stmt.executeQuery(sql);
 
+		      
+		      //STEP 5: Extract data from result set
+		      while(rs.next()){
+		         //Retrieve by column name
+		         rowcount  = rs.getInt("rowcount");
+		         //Display values
+		        // System.out.println("rowcount: " + rowcount);
+		       
+		      }
+		     
+		      //STEP 6: Clean-up environment
+		      rs.close();	      
+		      conn.close();
+		      return rowcount;
+		}
 	
 }
