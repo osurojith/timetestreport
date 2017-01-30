@@ -22,6 +22,6 @@ public class Excel2PDF {
 
         	//Save the workbook into pdf
 
-        	workbook.save("output.pdf");  
+        	workbook.save("TimeReport.pdf");  
         }
 }
