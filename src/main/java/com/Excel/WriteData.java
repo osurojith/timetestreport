@@ -8,7 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -25,8 +29,7 @@ public class WriteData {
 	//Create blank workbook
      XSSFWorkbook workbook = new XSSFWorkbook(); 
      //Create a blank sheet
-     XSSFSheet spreadsheet = workbook.createSheet( 
-     " Employee Info ");
+     XSSFSheet spreadsheet = workbook.createSheet(" Employee Info ");
      //Create row object
      XSSFRow row;
      //This data needs to be written (Object[])
@@ -54,8 +57,9 @@ public class WriteData {
     	 empinfo.put(Integer.toString(count) , new Object[] {"", "","", "", "","" });
     	
      }
+     XSSFCellStyle my_style = workbook.createCellStyle();
      int rowid = 0;
-     for(int i=1;i<23;i++){
+     for(int i=1;i<empinfo.size();i++){
     	 Object [] objectArr = empinfo.get(Integer.toString(i));
     	 
     	 row = spreadsheet.createRow(rowid++);
@@ -63,13 +67,27 @@ public class WriteData {
     	 for (Object obj : objectArr)
          {
     		 Cell cell = row.createCell(cellid++);
+    		 try{
+    			 System.out.println(Double.parseDouble(obj.toString()));
+    		 if(Double.parseDouble(obj.toString())>=10){
+    			 my_style.setFillPattern(XSSFCellStyle.DIAMONDS);
+    			 my_style.setFillForegroundColor(IndexedColors.BLUE.getIndex());
+    			 my_style.setFillBackgroundColor(IndexedColors.RED.getIndex());
+    			 cell.setCellStyle(my_style);
+    		 }
+    		 }
+    		 catch(NumberFormatException ex){
+    			 
+    		 }
              cell.setCellValue((String)obj);
+             
     		 	System.out.println(obj);
          }
      }
      for (int i=0; i<10; i++){
     	 spreadsheet.autoSizeColumn(i);
     	}
+     
      FileOutputStream out = new FileOutputStream( 
      new File("timereport.xlsx"));
      workbook.write(out);
