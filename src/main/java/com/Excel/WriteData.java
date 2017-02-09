@@ -22,7 +22,7 @@ import com.itextpdf.text.DocumentException;
 
 public class WriteData {
  public void writeToExcel(String [][][] data,String databases[]) throws Exception{
-	
+	PropertyReader prop=new PropertyReader();
 	int count=1;
 	int rowcount=1;
 	DBFunctions dbf=new DBFunctions();
@@ -71,7 +71,8 @@ public class WriteData {
     			 System.out.println(Double.parseDouble(obj.toString()));
     		 if(Double.parseDouble(obj.toString())>=10){
     			 my_style.setFillPattern(XSSFCellStyle.DIAMONDS);
-    			 my_style.setFillForegroundColor(IndexedColors.BLUE.getIndex());
+    			
+    			 my_style.setFillForegroundColor(IndexedColors.RED.getIndex());
     			 my_style.setFillBackgroundColor(IndexedColors.RED.getIndex());
     			 cell.setCellStyle(my_style);
     		 }

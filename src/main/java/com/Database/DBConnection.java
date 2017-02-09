@@ -5,15 +5,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBConnection {
+import com.Excel.PropertyReader;
+
+public class DBConnection{
 	public static Connection conn() throws ClassNotFoundException, SQLException{
 		 // JDBC driver name and database URL
-		    String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-		    String DB_URL = "jdbc:mysql://localhost/performancedb";
+		PropertyReader prop=new PropertyReader();
+		System.out.println("jknjkn"+prop.propp.getProperty("JDBC_DRIVER"));
+		    String JDBC_DRIVER = prop.propp.getProperty("JDBC_DRIVER"); 
+		    String DB_URL = prop.propp.getProperty("DB_URL"); 
 
 		   //  Database credentials
-		    String USER = "root";
-		    String PASS = "";
+		    String USER = prop.propp.getProperty("USER"); 
+		    String PASS = prop.propp.getProperty("PASS"); 
 		   
 		  
 		   Connection conn = null;
